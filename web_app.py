@@ -13,8 +13,13 @@ def add_todo():
 st.title("My To-Do App")
 st.subheader("Place all your daily tasks here!!!")
 
-for todo in todos:
-    st.checkbox(todo)
+for index, todo in enumerate(todos):
+    checkbox = st.checkbox(todo, key=todo)
+    if checkbox:
+        todos.pop(index)
+        function.write_todos(todos)
+        del st.session_state[todo]
+        st.experimental_rerun()
 
 st.text_input(label="Enter a To-Do", placeholder="add to-do",
               on_change=add_todo, key='new_todo')
